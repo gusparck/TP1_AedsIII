@@ -2,22 +2,37 @@ import matrizAdjacencias
 import listaAdjacencias
 import info
 import busca
+import sys
 
 # cria um grafo a partir de um arquivo:
 def leitura(nomeArquivo):
-    print("Implementar metodo leitura...")
+    arquivo = open(nomeArquivo)
+
+    str = arquivo.readline()
+    str = str.split(" ")
+    numVertices = int(str[0])
+    numArestas = int(str[1])
+
+    grafo = listaAdjacencias.ListaAdjacencias(numVertices)
+    # grafo = matrizAdjacencias.MatrizAdjacencias(numVertices)
+
+    for i in range(numArestas):
+        str = arquivo.readline()
+        str = str.split(" ")
+        origem = int(str[0])
+        destino = int(str[1])
+        peso = int(str[2])
+        grafo.addAresta(origem, destino, peso)
+
+    return grafo
 
 if __name__ == "__main__":
-    # grafo = matrizAdjacencias.MatrizAdjacencias(5)
-    grafo = listaAdjacencias.ListaAdjacencias(5)
+    if len(sys.argv) != 2:
+        print("Numero invalido de parametros! Argumentos esperados: main.py grafo.txt")
+        sys.exit(1)
 
-    grafo.addAresta(0, 1, 2)
-    grafo.addAresta(0, 2, 4)
-    grafo.addAresta(1, 4, 7)
-    grafo.addAresta(3, 2, 6)
-    grafo.addAresta(3, 4, 4)
-    grafo.addAresta(4, 0, 3)
-    grafo.addAresta(4, 3, 1)
+    # sys.argv[1] contem o nome do arquivo a ser lido
+    grafo = leitura(sys.argv[1])
 
     grafo.printGrafo()
 
@@ -46,7 +61,6 @@ if __name__ == "__main__":
         for (j, p) in subgrafo.vizinhos(i):
             print(vertices[j], end=" ")
         print()
-    
     
     busca.dfs(grafo, 2)
     busca.dfsIterativo(grafo, 3)
