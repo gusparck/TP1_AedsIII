@@ -17,12 +17,11 @@ class MatrizAdjacencias:
 
     # adiciona uma aresta (v1, v2) no grafo:
     # peso eh um parametro opcional
-    def addAresta(self, v1, v2, peso = 1):
+    def addAresta(self, v1, v2, peso=1):
         if self.matriz[v1][v2] == 0:
             self.numArestas += 1
             self.graus[v1] += 1
-        self.matriz[v1][v2] = peso
-
+            self.matriz[v1][v2] = peso
     # retorna True se existe uma aresta (v1,v2) no grafo:
     def possuiAresta(self, v1, v2):
         return self.matriz[v1][v2] != 0
