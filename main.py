@@ -2,6 +2,7 @@ import matrizAdjacencias
 import listaAdjacencias
 import info
 import busca
+import time
 import sys
 
 # cria um grafo a partir de um arquivo:
@@ -52,6 +53,9 @@ def lerLabirinto(nomeArquivo):
 
 # Adicione esta função ao arquivo main.py
 def encontrarCaminho(grafo, inicio_id, fim_id):
+    #Contagem do tempo de execução
+    
+    
     # Busca em largura para encontrar o caminho mais curto
     visitados = [False] * grafo.numVertices
     fila = [(inicio_id, [])]  # (vértice, caminho até ele)
@@ -69,10 +73,10 @@ def encontrarCaminho(grafo, inicio_id, fim_id):
                 visitados[vizinho] = True
                 fila.append((vizinho, caminho_atual))
     
-    return None  # Não existe caminho
+    return None 
 
-# Modifique o trecho final do main.py para:
 if __name__ == "__main__":
+    start = time.time()
     if len(sys.argv) != 2:
         print("Número inválido de parâmetros! Argumentos esperados: main.py labirinto.txt")
         sys.exit(1)
@@ -92,42 +96,12 @@ if __name__ == "__main__":
         caminho_coords = [mapa_inverso[id] for id in caminho_ids]
         
         # Imprimir caminho no formato desejado
-        caminho_str = " ".join([f"({i},{j})" for i, j in caminho_coords])
+        caminho_str = " -> ".join([f"({i},{j})" for i, j in caminho_coords])
         print(caminho_str)
     else:
         print("Não foi possível encontrar um caminho.")
     
-    # Aqui você poderia usar o grafo para encontrar caminhos no labirinto
-    # Por exemplo, usando BFS ou DFS para encontrar um caminho do início ao fim
+    end = time.time()
+    tempo_exe = end - start
     
-    # grafo.printGrafo()
-
-    '''print(f"Existe aresta entre 3 e 4? {grafo.possuiAresta(3,4)}")
-    print(f"Existe aresta entre 3 e 1? {grafo.possuiAresta(3,1)}")
-
-    print(f"Vizinhos de 3: {grafo.vizinhos(3)}")
-
-    for i in range(grafo.numVertices):
-        print(f"Vertice {i}: grau = {grafo.grau(i)}")
-
-    print(f"Densidade = {info.densidade(grafo)}")
-
-    print("Complemento do grafo:")
-    complemento = info.complemento(grafo)
-    complemento.printGrafo()
-
-    print(f"Grafo completo? {info.completo(grafo)}")
-
-    print(f"Grafo regular? {info.regular(grafo)}")
-
-    vertices = [0, 2, 3]
-    subgrafo = info.subgrafo(grafo, vertices)
-    for i in range(subgrafo.numVertices):
-        print(f"{vertices[i]} -> ", end=" ")
-        for (j, p) in subgrafo.vizinhos(i):
-            print(vertices[j], end=" ")
-        print()
-    
-    busca.dfs(grafo, 2)
-    busca.dfsIterativo(grafo, 3)
-    busca.bfs(grafo, 1)'''
+    print(f"Tempo de execução: {tempo_exe:.10f} segundos")
