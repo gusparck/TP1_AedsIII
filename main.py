@@ -13,7 +13,7 @@ def ler_grafo(nomeArquivo):
         
         for _ in range(num_arestas):
             origem, destino, peso = map(int, arquivo.readline().split())
-            grafo.addAresta(origem, destino, peso)  
+            grafo.addAresta(origem, destino, peso)  # Usa o método addAresta da classe
         
     return grafo
 
@@ -76,31 +76,34 @@ def encontrarCaminho(grafo, inicio_id, fim_id):
     
     return None 
 
-if __name__ == "__main__":
-    if len(sys.argv) == 2:  # Execução para Labirinto
-        nomeArquivo = sys.argv[1]
-        start = time.time()
 
-        grafo, mapa_vertices, inicio, fim = lerLabirinto(nomeArquivo)
-        inicio_id = mapa_vertices[inicio]
-        fim_id = mapa_vertices[fim]
-        caminho_ids = encontrarCaminho(grafo, inicio_id, fim_id)
+if len(sys.argv) == 2:  # Execução para Labirinto
+    nomeArquivo = sys.argv[1]
+    start = time.time()
 
-        if caminho_ids:
-            mapa_inverso = {v: k for k, v in mapa_vertices.items()}
-            caminho_coords = [mapa_inverso[id] for id in caminho_ids]
-            caminho_str = " -> ".join([f"({i},{j})" for i, j in caminho_coords])
-            print(f"Caminho encontrado: {caminho_str}")
-        else:
-            print("Não foi possível encontrar um caminho.")
+    grafo, mapa_vertices, inicio, fim = lerLabirinto(nomeArquivo)
+    inicio_id = mapa_vertices[inicio]
+    fim_id = mapa_vertices[fim]
+    caminho_ids = encontrarCaminho(grafo, inicio_id, fim_id)
 
-        end = time.time()
-        print(f"Tempo de execução: {end - start:.6f} s")
+    if caminho_ids:
+        mapa_inverso = {v: k for k, v in mapa_vertices.items()}
+        caminho_coords = [mapa_inverso[id] for id in caminho_ids]
+        caminho_str = " -> ".join([f"({i},{j})" for i, j in caminho_coords])
+        print(f"Caminho encontrado: {caminho_str}")
+    else:
+        print("Não foi possível encontrar um caminho.")
 
-    elif len(sys.argv) == 4:  # Execução para Caminho Mínimo em Grafo Ponderado
-        nomeArquivo = sys.argv[1]
-        origem = int(sys.argv[2])
-        destino = int(sys.argv[3])
+    end = time.time()
+    print(f"Tempo de execução: {end - start:.6f} s")
+
+    # 🚨 Impede que o código continue para a parte de grafos
+    sys.exit(0)
+
+elif len(sys.argv) == 4:  # Execução para Caminho Mínimo em Grafo Ponderado
+    nomeArquivo = sys.argv[1]
+    origem = int(sys.argv[2])
+    destino = int(sys.argv[3])
 
     grafo = ler_grafo(nomeArquivo)
     print("\nProcessando...\n")
