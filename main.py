@@ -46,7 +46,7 @@ def lerLabirinto(nomeArquivo):
     
     for (i, j), id_vertice in mapa_vertices.items():
         for di, dj in movimentos:
-            ni, nj = i + di, j + d
+            ni, nj = i + di, j + dj
             
             if (0 <= ni < linhas and 0 <= nj < colunas and 
                 labirinto[ni][nj] != '#' and 
