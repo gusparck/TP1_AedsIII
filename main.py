@@ -1,21 +1,6 @@
 import matrizAdjacencias
-import listaAdjacencias
-import info
-import busca
-import time
 import sys
-import caminho_minimo
-
-def ler_grafo(nomeArquivo):
-    with open(nomeArquivo, 'r') as arquivo:
-        num_vertices, num_arestas = map(int, arquivo.readline().split())
-        grafo = matrizAdjacencias.MatrizAdjacencias(num_vertices)
-        
-        for _ in range(num_arestas):
-            origem, destino, peso = map(int, arquivo.readline().split())
-            grafo.addAresta(origem, destino, peso)  # Usa o método addAresta da classe
-        
-    return grafo
+import time
 
 def lerLabirinto(nomeArquivo):
     with open(nomeArquivo, 'r') as arquivo:
@@ -34,7 +19,6 @@ def lerLabirinto(nomeArquivo):
             if labirinto[i][j] != '#':
                 mapa_vertices[(i, j)] = contador_id
                 contador_id += 1
-                
                 if labirinto[i][j] == 'S':
                     posicao_inicio = (i, j)
                 elif labirinto[i][j] == 'E':
@@ -74,8 +58,7 @@ def encontrarCaminho(grafo, inicio_id, fim_id):
                 visitados[vizinho] = True
                 fila.append((vizinho, caminho_atual))
     
-    return None 
-
+    return None  # Caso não haja caminho
 
 if len(sys.argv) == 2:  # Execução para Labirinto
     nomeArquivo = sys.argv[1]
@@ -96,31 +79,4 @@ if len(sys.argv) == 2:  # Execução para Labirinto
 
     end = time.time()
     print(f"Tempo de execução: {end - start:.6f} s")
-
     
-    sys.exit(0)
-
-elif len(sys.argv) == 4:  # Execução para Caminho Mínimo em Grafo Ponderado
-    nomeArquivo = sys.argv[1]
-    origem = int(sys.argv[2])
-    destino = int(sys.argv[3])
-
-    grafo = ler_grafo(nomeArquivo)
-    print("\nProcessando...\n")
-
-    for nome, algoritmo in [("Dijkstra", caminho_minimo.dijkstra), 
-                            ("Bellman-Ford", caminho_minimo.bellman_ford),
-                            ("Floyd-Warshall", caminho_minimo.floyd_warshall)]:
-
-        if nome == "Floyd-Warshall":
-            distancias, predecessores, tempo_execucao = algoritmo(grafo)
-            caminho = caminho_minimo.reconstruir_caminho_floyd(predecessores, origem, destino)
-            custo = distancias[origem][destino]
-        else:
-            caminho, custo, tempo_execucao = algoritmo(grafo, origem, destino)
-
-        print(f"----- {nome} -----")
-        print(f"Caminho mínimo: {caminho}")
-        print(f"Custo: {custo}")
-        print(f"Tempo: {tempo_execucao:.6f} s")
-        print("-------------------")
