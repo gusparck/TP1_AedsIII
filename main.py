@@ -97,7 +97,7 @@ if len(sys.argv) == 2:  # Execução para Labirinto
     end = time.time()
     print(f"Tempo de execução: {end - start:.6f} s")
 
-    # 🚨 Impede que o código continue para a parte de grafos
+    
     sys.exit(0)
 
 elif len(sys.argv) == 4:  # Execução para Caminho Mínimo em Grafo Ponderado
