@@ -68,7 +68,7 @@ def encontrarCaminho(grafo, inicio_coord, fim_coord, mapa_vertices):
     
     return None
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     start = time.time()
     
     try:

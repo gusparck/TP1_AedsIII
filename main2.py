@@ -4,15 +4,16 @@ import sys
 import time  
 
 def ler_grafo(nomeArquivo):
-    with open(nomeArquivo, 'r') as arquivo:
-        num_vertices, num_arestas = map(int, arquivo.readline().split())
-        grafo = matrizAdjacencias.MatrizAdjacencias(num_vertices)
+    with open(nomeArquivo, 'r') as arquivo:  # Abre o arquivo para leitura
+        num_vertices, num_arestas = map(int, arquivo.readline().split())  # Lê o número de vértices e arestas
+        grafo = matrizAdjacencias.MatrizAdjacencias(num_vertices)  # Cria o grafo vazio
         
-        for _ in range(num_arestas):
-            origem, destino, peso = map(int, arquivo.readline().split())
-            grafo.addAresta(origem, destino, peso)
+        for _ in range(num_arestas):  # Itera pelas arestas
+            origem, destino, peso = map(int, arquivo.readline().split())  # Lê origem, destino e peso da aresta
+            grafo.addAresta(origem, destino, peso)  # Adiciona a aresta ao grafo
         
-    return grafo
+    return grafo  # Retorna o grafo preenchido
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
